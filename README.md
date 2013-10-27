@@ -14,3 +14,12 @@ Example trip provided in geoJSON format with `voltage`, `altitude`, `distance`(a
 ### Reference
 
 Basic FE design also uses elements from [quantified-self-mock](https://github.com/mrastan/quantified-self-mock) by [mrastan](https://github.com/mrastan)
+
+### Running
+
+To run the app:
+
+* Download and install [node.js](http://nodejs.org)
+* Run `npm install` in the main directory (installs packages in `package.json`)
+* Run `node app` in the main directory
+* Open a browser is point it to `localhost:3000`
