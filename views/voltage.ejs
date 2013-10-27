@@ -1,0 +1,20 @@
+<div class="qs-box" id="qs-voltage"> 
+  <h4 class="qs-box-title">VOLTAGE</h4>             
+  <div class="qs-box-content qs-meter">
+    <input type="text" class="dial" 
+    data-min="0" data-max="29"
+    data-width="160" data-height="160"
+    data-linecap=round data-angleArc=250 data-angleOffset=-125
+    data-thickness=".2"
+    data-cursor=false>
+    <span class="meter-unit"></span>
+    <span class="meter-icon"><i class="glyphicon-flash"></i></span>    
+    <span class="meter-value">28.1 V</span>
+  </div>
+</div>  
+
+<script type="text/javascript">
+$( function(){
+  animateKnob('#qs-voltage', 0, 0, "#66CC66");
+});
+</script>

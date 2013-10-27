@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Quantify E-Bike</title>
+  <script src="js/jquery-1.9.1.js"></script>
+  <script src="js/jquery-ui.js"></script>
+  <script src="js/jquery.gridster.with-extras.js"></script>
+  <script src="js/jquery.knob.js"></script>
+  <script src="js/d3.v3.min.js"></script>
+  <script src="js/bootstrap.min.js"></script>
+  <script src="js/Chart.js"></script>
+  <script src="js/application.js"></script>
+  <link rel="stylesheet" type="text/css" href="css/jquery.gridster.min.css">
+  <link rel="stylesheet" type="text/css" href="css/pure-min.css"> 
+  <link rel="stylesheet" type="text/css" href="css/bootstarp-progress_bar.css">
+  <link rel="stylesheet" type="text/css" href="css/bootstarp-modal.css">
+  <link rel="stylesheet" type="text/css" href="css/font-awesome.min.css"> 
+  <link rel="stylesheet" type="text/css" href="css/glyphicons.css">
+  <link rel="stylesheet" type="text/css" href="css/maki-sprite.css">
+  <link rel="stylesheet" type="text/css" href="css/application.css">
+</head>
+
+<body>
+  <div class="content">
+    <% include header %>
+    <div class="pure-g">
+      <div class="pure-u-1">
+        <div class="gridster" id="dashboard">
+          <ul>
+            <li data-row="1" data-col="1" data-sizex="4" data-sizey="2">
+              <% include qs-map %>
+            </li>
+            <li data-row="3" data-col="5" data-sizex="1" data-sizey="1">
+              <% include altitude %>
+            </li>
+            <li data-row="4" data-col="5" data-sizex="1" data-sizey="1">
+              <% include voltage %>
+            </li>
+            <li data-row="1" data-col="5" data-sizex="1" data-sizey="1">
+              <% include distance %>
+            </li>
+            <li data-row="3" data-col="4" data-sizex="1" data-sizey="1">
+              <% include speed %>
+            </li>
+          </ul>
+        </div>          
+      </div>  
+    </div>
+  </div>
+</body>
+</html>

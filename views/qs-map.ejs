@@ -1,0 +1,173 @@
+<script src='http://api.tiles.mapbox.com/mapbox.js/v1.3.1/mapbox.js'></script>
+<script src='data/data.js'></script>
+<link rel="stylesheet" type="text/css" href="stylesheets/leaflet.css">
+<link href='http://api.tiles.mapbox.com/mapbox.js/v1.3.1/mapbox.css' rel='stylesheet' />
+
+<style type="text/css">
+  
+  #map { 
+    position:absolute; 
+    width: 828px; 
+    height: 408px;
+    border: 1px solid white;
+  }
+  
+  .leaflet-popup-content-wrapper, .leaflet-popup-tip {
+    background: maroon;
+    box-shadow:0 2px 4px rgba(0,0,0,0.6);
+    color: white;
+  }
+
+  .leaflet-popup-content {
+    margin: 1em;
+  }
+  
+  .popup {
+    color: #333;
+    text-align: center;
+  }
+
+  .popup h3 {
+    margin: 0.5em;
+  }
+
+  path {
+    fill-opacity: 0;
+    stroke: #27a8e0;
+    stroke-width: 2px;
+    stroke-
+  }
+
+  image {
+    z-index: 100;
+  }
+
+  bike {
+    fill: #0f0;
+  }
+  
+</style>
+
+<div id='map'></div>
+
+<script type='text/javascript'>
+  var map = L.mapbox.map('map', 'mrastan.map-r6s6jvr7')
+          .setView([47.502514,8.74224], 15);
+
+  map.dragging.disable();
+
+  var svg = d3.select(map.getPanes().overlayPane).append("svg")
+          .style("width", 800)
+          .style("height", 900);
+  var g = svg.append("g").attr("class", "leaflet-zoom-hide");
+
+  collection = data_path;
+  var transform = d3.geo.transform({point: projectPoint}),
+      path = d3.geo.path().projection(transform),
+      bounds = path.bounds(collection);
+
+  var feature = g
+      .attr("class", "route")
+      .selectAll("path")
+      .data(collection.features)
+    .enter().append("path")
+              .attr("fill", "none");; 
+
+  map.on("viewreset", reset);
+  reset();
+
+  var greenIcon = L.icon({
+      iconUrl: 'images/marker-icon.png',
+      shadowUrl: 'images/marker-shadow.png',
+
+      iconSize:     [13, 21], // size of the icon
+      shadowSize:   [21, 21], // size of the shadow
+      iconAnchor:   [12, 21], // point of the icon which will correspond to marker's location
+      shadowAnchor: [13, 21],  // the same for the shadow
+      popupAnchor:  [-3, -76] // point from which the popup should open relative to the iconAnchor
+  });
+
+  function reset() {
+    feature.attr("d", path);
+  }
+
+  var bikeWidth = 40;
+  var bikeHeight = 40;  
+  bike = g.append("svg:image")
+    .attr("class", "bike")
+    .attr('width', bikeWidth)
+    .attr('height', bikeHeight)
+    .attr("xlink:href","assets/bike-icon.png")
+    .attr({transform: function () {
+          return "translate(" + [100, 400] + ")";
+    }});
+
+  function projectPoint(x, y) {
+    var point = map.latLngToLayerPoint(new L.LatLng(y, x));
+    this.stream.point(point.x, point.y);
+  }
+
+  var pois = {};
+  var update_pois = function(feature){
+    var points_of_interest = feature["properties"]["points_of_interest"]
+    var points_of_interest_names = points_of_interest.map(function(point){
+     return point["name"]; 
+    });
+    for(var key in pois){
+      if(points_of_interest_names.indexOf(key) == -1){
+        map.removeLayer(pois[key]);  
+      }
+    }
+    for(var i=0;i<points_of_interest.length-1;i++){
+      if(pois[points_of_interest[i]["name"]] == null){
+        var latlng = new L.LatLng(points_of_interest[i]["location"]["lat"], points_of_interest[i]["location"]["lng"]);
+        var marker = new L.Marker(latlng, {icon: greenIcon });
+        marker.addTo(map);
+        pois[points_of_interest[i]["name"]] = marker;
+      }
+    }
+  }
+
+  var i = data_path.features.length;
+  var periodic = function() {
+    if (i > 0) {
+      i -= 1;
+
+    var lat = data_path.features[i].geometry.coordinates[0];
+    var lng = data_path.features[i].geometry.coordinates[1];
+    var img_url = 'http://maps.googleapis.com/maps/api/streetview?size=200x200&location=' + lng + ',%20' + lat + '&sensor=false';
+    console.log(img_url);
+    var point = map.latLngToLayerPoint(new L.LatLng(lng, lat));
+
+    var distance_pr = Math.ceil(100 - data_path.features[i].properties.distance/data_path.features[data_path.features.length-1].properties.distance * 100);
+    var distance_str = (data_path.features[data_path.features.length-1].properties.distance - data_path.features[i].properties.distance).toFixed(1) + ' km';
+    var voltage_pr = Math.ceil(100*(30-data_path.features[i].properties.voltage)/30.0);
+    var voltage_str = (data_path.features[i].properties.voltage/1.0).toFixed(1) + ' V';
+    var altitude_pr = Math.ceil((500 - data_path.features[i].properties.altitude)/50*100 );
+    var altitude_srt = Math.ceil(data_path.features[i].properties.altitude) + ' m';
+    var speed_pr = Math.ceil(data_path.features[i].properties.speed/80*100);
+    var speed_str = (data_path.features[i].properties.speed/1.0).toFixed(1) + ' km/h';
+
+    bike.transition()
+        .duration(200)
+        .ease("linear")        
+        .attr({transform: function () {
+          return "translate(" + [point.x-20, point.y-40] + ")";
+    }});
+
+    //distance - update
+    updateKnob('#qs-distance', distance_pr, distance_str, '#3681d5');
+    updateKnob('#qs-voltage', voltage_pr, voltage_str, '#66CC66');
+    updateKnob('#qs-altitude', altitude_pr, altitude_srt, '#ef6510');
+    updateKnob('#qs-speed', speed_pr, speed_str, '#ef6510');
+
+    //update markers 
+    update_pois(data_path.features[i]);
+
+    //update SV
+    // $("#image-sv").attr("src", img_url);
+
+   }
+  }
+  setInterval(periodic, 150);
+</script>

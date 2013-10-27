@@ -1,0 +1,161 @@
+body {
+  background: #BFBFBF;
+  color: #333;
+  font-size: 13px;
+}
+
+.gridster {
+  margin:auto;
+  width: 80%;
+  padding-top: 1em;
+  left: -100%;
+}
+
+.gridster .gs_w {
+  background: #FFF;     
+  box-shadow: 0 0 5px rgba(0,0,0,0.3);
+}
+
+.gridster ul {
+  list-style: none;
+}
+
+/* Widget box */ 
+.qs-box {}
+.qs-box-title { margin: 1em; }
+.qs-box-title span {
+  color: #555;
+  font-size: 80%;
+  font-weight: normal;
+}
+.qs-box-content {
+  color: #555;
+  width: 90%;
+  text-align: center;
+  position: relative;
+  margin:auto;
+}
+
+/* Circle meter widget */
+.qs-meter .meter-unit,
+.qs-meter .meter-value,
+.qs-meter .meter-desc, 
+.qs-meter .meter-icon {
+  position: absolute;     
+  width: 100%;
+  left: 0;
+  text-align: center;
+}
+.qs-meter .meter-icon {
+  top: 50px;
+
+  padding: 0;
+}
+.qs-meter .meter-icon i { 
+  left:0;
+  text-align: center;
+  font-size: 42px; 
+}   
+
+.qs-meter .meter-unit {
+  top: 95px;
+  font-size: 12px;
+}   
+.qs-meter .meter-value {
+  top: 110px;
+  font-size: 150%;
+  font-weight: bold;
+} 
+.qs-meter .meter-desc {
+  top: 135px;
+  font-size: 80%;
+}
+
+/* Nav menu =============================== */
+.header .pure-menu {
+  padding: 0.5em;
+  border-bottom: 5px solid #CFCFCF;
+  position: relative;
+}
+.menu-profile {
+  position: absolute;           
+  right: 2em;
+  top: 50%;
+  margin-top: -1em; 
+  padding-right: 1em;
+}
+
+.menu-profile-avatar {
+  border-radius: 13px;
+  text-align: right;
+}
+.nav-link {
+  font-weight: 700 !important;
+  color: #3a3a3a !important;
+  font-size: 12px;
+  text-align: center;
+}
+.nav-link:hover
+{
+  color: #449a88 !important;
+}
+.nav-link-active {
+  color: #72c1b0 !important;
+}
+
+    .pure-button-success {
+    color: white;
+        border-radius: 4px;
+        text-shadow: 0 1px 1px rgba(0, 0, 0, 0.2);
+        background: #e85c41; 
+        font-weight: 700;
+    }
+
+    /* Sing up modal ==========================*/
+    #signUpModal input {
+      font-size: 1em;
+      border: 2px solid #2aa0b5;
+    }
+    #signUpModal  form {
+      text-align: center;
+    }
+    #signUpModal .close { 
+      float: right; 
+    margin: 5px 10px; 
+    text-decoration: none; 
+    font-size:150%;
+}
+    #signUpModal #email {
+      width: 50%;
+    }
+
+    .pure-sign-up-button {
+    color: white;
+      background: #2aa0b5;
+      border: 1px solid #2aa0b5;
+      border-radius: 4px;
+      font-weight: 700;
+    }
+
+/* Widget upper control ====================*/
+.qs-box-controls {      
+  text-align: right;
+}   
+.qs-box-controls a {
+  width: 30%;
+  text-align: center;
+  padding-top: 0.4em;     
+  font-size: 80%;
+  font-weight: 600; 
+  display: inline-block;            
+  border-top: 5px solid transparent;
+  text-decoration: none;
+  color: #333;
+}
+.qs-box-controls a.ui-selecting { border-top-color: #1b98f8; }
+.qs-box-controls a.ui-selected { border-top-color: #1fc090; color: #1b9e77; }   
+.qs-box-controls a:hover, 
+.qs-box-controls a:focus {
+  color: #1b9e77;
+  border-top-color: #1b9e77;
+}
