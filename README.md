@@ -1,4 +1,4 @@
-Hackathon 2013 - ZH
+Zurich Hackathon 2013
 ===================
 
 ### Collaborators
